@@ -66,11 +66,11 @@ void printField()
 {
 	cout << "  CROSS-ZERO GAME" << endl;
 	cout << "###################" << endl;
-	cout << "#  "<< mass[0] <<"  #  " << mass[1] << "  #  " << mass[2] << "  #" << endl;
+	cout << "#  "<< mass[6] <<"  #  " << mass[7] << "  #  " << mass[8] << "  #" << endl;
 	cout << "###################" << endl;
 	cout << "#  " << mass[3] << "  #  " << mass[4] << "  #  " << mass[5] << "  #" << endl;
 	cout << "###################" << endl;
-	cout << "#  " << mass[6]<< "  #  " << mass[7] << "  #  " << mass[8] << "  #" << endl;
+	cout << "#  " << mass[0]<< "  #  " << mass[1] << "  #  " << mass[2] << "  #" << endl;
 	cout << "###################" << endl;
 }
 
@@ -90,19 +90,32 @@ void usersStep(int number)
 void computersStep()
 {	
 	bool stepDone = false;
+	bool computerWin = false;
 	for (int i = 0; i < 9; i++)
 	{
-		if (mass[i] == ' ')
+		if (mass[i] == ' ' && ifMayWinAnyone(i, '0'))
 		{			
-			if (ifMayWinAnyone(i, 'X') || ifMayWinAnyone(i, '0'))
+			mass[i] = '0';
+			stepDone = true;
+			computerWin = true;
+			break;					
+			
+		}
+	}
+	if (!computerWin)
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (mass[i] == ' ' && ifMayWinAnyone(i, 'X'))
 			{
 				mass[i] = '0';
 				stepDone = true;
 				break;
-			}			
-			
-		}		
+
+			}
+		}
 	}
+	
 	if (!stepDone)
 	{
 		for (int i = 0; i < 9; i++)

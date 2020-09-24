@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include <windows.h>
+#include <stdlib.h>
 using namespace std;
 const int BEST_MOVES[] = { 4, 0, 2, 6, 8, 1, 3, 5, 7 };
 
@@ -8,34 +8,37 @@ void fillMassive();
 void printField();
 void usersStep(int number);
 void computersStep();
-void clearConsole();
 bool IsVictory(char symbol);
 bool IsDraw();
 bool ifMayWinAnyone(int index, char symbol);
 
 int main()
-{
-    	
+{    	
 	int choice;	
 	fillMassive();	
 	while (true)
 	{		
-		clearConsole();
+		system("cls");
 		printField();
 		cout << endl << "Make your choice: ";
 		cin >> choice;
+		if (choice < 1 || choice > 9)
+		{
+			cout << "Error! You enter wrong number (only from 1 to 9)." << endl;
+			return 1;
+		}
 		usersStep(choice);
 		computersStep();
 		if (IsVictory('X'))
 		{
-			clearConsole();
+			system("cls");
 			printField();
 			cout << "USER WIN!";
 			break;
 		}
 		else if (IsVictory('0'))
 		{
-			clearConsole();
+			system("cls");
 			printField();
 			cout << "Computer WIN!";
 			break;
@@ -43,7 +46,7 @@ int main()
 
 		if (IsDraw())
 		{
-			clearConsole();
+			system("cls");
 			printField();
 			cout << "Draw!";
 			break;
@@ -51,7 +54,7 @@ int main()
 		
 	}
 	
-
+	return 0;
 }
 
 void fillMassive()
@@ -74,18 +77,11 @@ void printField()
 	cout << "###################" << endl;
 }
 
-void clearConsole()
-{
-	system("cls");
-	COORD position = { 0,0 }; 
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleCursorPosition(hConsole, position);
-}
-
 void usersStep(int number)
 {
 	mass[number - 1] = 'X';
 }
+	
 
 void computersStep()
 {	
@@ -111,11 +107,9 @@ void computersStep()
 				mass[i] = '0';
 				stepDone = true;
 				break;
-
 			}
 		}
-	}
-	
+	}	
 	if (!stepDone)
 	{
 		for (int i = 0; i < 9; i++)
@@ -126,10 +120,7 @@ void computersStep()
 				break;
 			}
 		}
-	}
-	
-	
-	
+	}		
 }
 
 bool ifMayWinAnyone(int index, char symbol)
@@ -148,8 +139,7 @@ bool ifMayWinAnyone(int index, char symbol)
 
 
 bool IsVictory(char symbol)
-{
-	
+{	
 	if (mass[0] == symbol && mass[1] == symbol && mass[2] == symbol)
 	{
 		return true;
@@ -186,7 +176,7 @@ bool IsVictory(char symbol)
 }
 
 bool IsDraw()
-{
+{	
 	for (int i = 0; i < 9; i++)
 	{
 		if (mass[i] == ' ')
